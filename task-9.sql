@@ -1,0 +1,61 @@
+USE juit_project1;
+
+CREATE TABLE Department (
+    DEPTNO INT PRIMARY KEY,
+    DNAME VARCHAR(20),
+    LOC VARCHAR(20)
+);
+
+CREATE TABLE Employee (
+    EMPNO INT PRIMARY KEY,
+    ENAME VARCHAR(20),
+    JOB VARCHAR(10),
+    DEPTNO INT,
+    SAL INT,
+    FOREIGN KEY (DEPTNO) REFERENCES Department(DEPTNO)
+);
+
+INSERT INTO Department VALUES (1, 'ACCOUNTING', 'NEW YORK');
+INSERT INTO Department VALUES (2, 'RESEARCH', 'DALLAS');
+INSERT INTO Department VALUES (30, 'SALES', 'CHICAGO');
+INSERT INTO Department VALUES (40, 'OPERATIONS', 'BOSTON');
+
+INSERT INTO Employee VALUES (1, 'Mathi', 'AP', 1, 10000);
+INSERT INTO Employee VALUES (2, 'Arjun', 'ASP', 2, 12000);
+INSERT INTO Employee VALUES (3, 'Gugan', 'ASP', 2, 20000);
+INSERT INTO Employee VALUES (4, 'Karthik', 'AP', 1, 15000);
+
+SELECT * FROM Employee;
+SELECT * FROM Department;
+
+SELECT e.EMPNO, e.ENAME, e.JOB, e.DEPTNO, e.SAL, d.DNAME, d.LOC
+FROM Employee e
+INNER JOIN Department d ON e.DEPTNO = d.DEPTNO;
+
+SELECT *
+FROM Employee
+NATURAL JOIN Department;
+
+SELECT e.EMPNO, e.ENAME, e.JOB, e.DEPTNO, e.SAL, d.DNAME, d.LOC
+FROM Employee e
+JOIN Department d ON e.DEPTNO = d.DEPTNO;
+
+SELECT e.EMPNO, e.ENAME, e.JOB, e.DEPTNO, e.SAL, d.DNAME, d.LOC
+FROM Employee e
+JOIN Department d ON e.DEPTNO = d.DEPTNO AND e.SAL > 12000;
+
+SELECT e.EMPNO, e.ENAME, e.JOB, e.DEPTNO, e.SAL, d.DNAME, d.LOC
+FROM Employee e
+LEFT JOIN Department d ON e.DEPTNO = d.DEPTNO;
+
+SELECT e.EMPNO, e.ENAME, e.JOB, e.DEPTNO, e.SAL, d.DNAME, d.LOC
+FROM Employee e
+RIGHT JOIN Department d ON e.DEPTNO = d.DEPTNO;
+
+SELECT e.EMPNO, e.ENAME, e.JOB, e.DEPTNO, e.SAL, d.DNAME, d.LOC
+FROM Employee e
+LEFT JOIN Department d ON e.DEPTNO = d.DEPTNO
+UNION
+SELECT e.EMPNO, e.ENAME, e.JOB, e.DEPTNO, e.SAL, d.DNAME, d.LOC
+FROM Employee e
+RIGHT JOIN Department d ON e.DEPTNO = d.DEPTNO;
